@@ -1,4 +1,6 @@
 import Product from '../models/product'
+import ErrorHandler from '../utils/errorHandler'
+// import catchAsyncErrors from '../middlewares/catchAsyncErrors'
 
 // Create new product  =>  /api/admin/products/new
 const newProduct = async (req, res, next) => {
@@ -26,10 +28,7 @@ const getSingleProduct = async (req, res, next) => {
   const product = await Product.findById(req.query.id)
 
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: 'محصول یافت نشد',
-    })
+    return next(new ErrorHandler('محصول یافت نشد', 404))
   }
 
   res.status(200).json({
@@ -43,10 +42,7 @@ const updateProduct = async (req, res, next) => {
   let product = await Product.findById(req.query.id)
 
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: 'محصول یافت نشد',
-    })
+    return next(new ErrorHandler('محصول یافت نشد', 404))
   }
 
   product = await Product.findByIdAndUpdate(req.query.id, req.body, {
@@ -66,10 +62,7 @@ const deleteProduct = async (req, res, next) => {
   const product = await Product.findById(req.query.id)
 
   if (!product) {
-    return res.status(404).json({
-      success: false,
-      message: 'محصول یافت نشد',
-    })
+    return next(new ErrorHandler('محصول یافت نشد', 404))
   }
 
   await product.remove()

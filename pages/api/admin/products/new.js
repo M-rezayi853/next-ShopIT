@@ -2,15 +2,11 @@ import nc from 'next-connect'
 
 import connectDatabase from '../../../../config/database'
 import { newProduct } from '../../../../controllers/productControllers'
+import onError from '../../../../middlewares/errors'
+
+const handler = nc({ onError })
 
 connectDatabase()
-
-const handler = nc({
-  onError: (err, req, res, next) => {
-    console.error(err.stack)
-    res.status(500).end('Something broke!')
-  },
-})
 
 handler.post(newProduct)
 
