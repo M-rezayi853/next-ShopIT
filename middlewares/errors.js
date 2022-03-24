@@ -15,8 +15,14 @@ const onError = (err, req, res, next) => {
 
   // Handling mongoose validation error
   if (err.name === 'ValidationError') {
-    const messages = Object.values(err.errors).map((value) => value.message)
-    error = new ErrorHandler(messages, 400)
+    const message = Object.values(err.errors).map((value) => value.message)
+    error = new ErrorHandler(message, 400)
+  }
+
+  // Handling mongoose duplicate key errors
+  if (err.code && err.code == 11000) {
+    const message = `تکراری ${Object.keys(err.keyValue)} وارد شد`
+    error = new ErrorHandler(message, 400)
   }
 
   res.status(err.statusCode).json({
