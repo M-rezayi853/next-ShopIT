@@ -1,10 +1,7 @@
 import nc from 'next-connect'
 
 import connectDatabase from '../../../../config/database'
-import {
-  updateProduct,
-  deleteProduct,
-} from '../../../../controllers/productControllers'
+import { allUsers } from '../../../../controllers/authControllers'
 import onError from '../../../../middlewares/errors'
 import {
   isAuthenticatedUser,
@@ -15,7 +12,6 @@ const handler = nc({ onError })
 
 connectDatabase()
 
-handler.use(isAuthenticatedUser, authorizeRoles('ادمین')).put(updateProduct)
-handler.use(isAuthenticatedUser, authorizeRoles('ادمین')).delete(deleteProduct)
+handler.use(isAuthenticatedUser, authorizeRoles('ادمین')).get(allUsers)
 
 export default handler

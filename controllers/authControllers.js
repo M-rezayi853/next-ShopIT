@@ -157,4 +157,167 @@ const resetPassword = async (req, res, next) => {
   }
 }
 
-export { registerUser, loginUser, forgotPassword, resetPassword }
+// Get currently logged in user details  =>  /api/me
+const getUserProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id)
+
+    res.status(200).json({
+      success: true,
+      user,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+// Update / change password  =>  /api/password/update
+const updatePassword = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id).select('+password')
+
+    // Check previous user password
+    const isMatched = await user.comparePassword(req.body.oldPassword)
+
+    if (!isMatched) {
+      return next(new ErrorHandler('رمز عبور قدیمی اشتباه است', 400))
+    }
+
+    user.password = req.body.password
+    await user.save()
+
+    res.status(200).json({
+      success: true,
+      user,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+// Update user profile   =>  /api/me/update
+const updateProfile = async (req, res, next) => {
+  try {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+    }
+
+    // Update avatar: TODO
+
+    const user = await User.findByIdAndUpdate(req.user._id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    })
+
+    res.status(200).json({
+      success: true,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+// Admin routes
+
+// Get all users  =>  /api/admin/users
+const allUsers = async (req, res, next) => {
+  try {
+    const users = await User.find()
+
+    res.status(200).json({
+      success: true,
+      users,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+// Get user details  =>  /api/admin/user/:id
+const getUserDetails = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.query.id)
+
+    if (!user) {
+      return next(
+        new ErrorHandler(`کاربر با شناسه پیدا نشد: ${req.query.id}`, 404)
+      )
+    }
+
+    res.status(200).json({
+      success: true,
+      user,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+// Update user  =>  /api/admin/users/:id
+const updateUser = async (req, res, next) => {
+  try {
+    const newUserData = {
+      name: req.body.name,
+      email: req.body.email,
+      role: req.body.role,
+    }
+
+    const user = await User.findByIdAndUpdate(req.query.id, newUserData, {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    })
+
+    res.status(200).json({
+      success: true,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+// Delete user  =>  /api/admin/user/:id
+const deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.query.id)
+
+    if (!user) {
+      return next(
+        new ErrorHandler(`کاربر با شناسه پیدا نشد: ${req.query.id}`, 404)
+      )
+    }
+
+    // Remove avatar from cloudinary - TODO
+
+    await user.remove()
+
+    res.status(200).json({
+      success: true,
+    })
+  } catch (error) {
+    console.log(error)
+    throw new Error(error)
+  }
+}
+
+export {
+  registerUser,
+  loginUser,
+  forgotPassword,
+  resetPassword,
+  getUserProfile,
+  updatePassword,
+  updateProfile,
+  allUsers,
+  getUserDetails,
+  updateUser,
+  deleteUser,
+}

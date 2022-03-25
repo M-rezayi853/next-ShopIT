@@ -3,7 +3,10 @@ import nc from 'next-connect'
 import connectDatabase from '../../../../config/database'
 import { newProduct } from '../../../../controllers/productControllers'
 import onError from '../../../../middlewares/errors'
-import { isAuthenticatedUser } from '../../../../middlewares/auth'
+import {
+  isAuthenticatedUser,
+  authorizeRoles,
+} from '../../../../middlewares/auth'
 
 const handler = nc({ onError })
 
