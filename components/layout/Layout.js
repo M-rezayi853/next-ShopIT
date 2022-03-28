@@ -1,8 +1,16 @@
 import React from 'react'
 import Head from 'next/head'
+import { positions, transitions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
 import Header from './Header'
 import Footer from './Footer'
+
+const options = {
+  timeout: 5000,
+  position: positions.BOTTOM_CENTER,
+  transitions: transitions.SCALE,
+}
 
 const Layout = ({
   children,
@@ -18,10 +26,11 @@ const Layout = ({
         <meta name='viewport' content='width=device-width, initial-scale=1.0' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
-      <Header />
-      {children}
-      <Footer />
+      <AlertProvider template={AlertTemplate} {...options}>
+        <Header />
+        {children}
+        <Footer />
+      </AlertProvider>
     </div>
   )
 }

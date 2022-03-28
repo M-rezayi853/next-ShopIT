@@ -1,13 +1,20 @@
 import React from 'react'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const Header = () => {
+  const { push } = useRouter()
+
   return (
     <>
       <nav className='navbar row'>
         <div className='col-12 col-md-3'>
-          <div className='navbar-brand'>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src='/images/logo.png' alt='img' />
+          <div
+            className='navbar-brand'
+            onClick={() => push('/')}
+            style={{ cursor: 'pointer' }}
+          >
+            <Image src='/images/logo.png' alt='img' width={150} height={35} />
           </div>
         </div>
 

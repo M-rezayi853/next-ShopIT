@@ -23,8 +23,8 @@ const newProduct = async (req, res, next) => {
 // Get all products  =>  /api/products?keyword=apple
 const getProducts = async (req, res, next) => {
   try {
-    const resPerPage = 4
-    const productCount = await Product.countDocuments()
+    const resPerPage = 12
+    const productsCount = await Product.countDocuments()
 
     const apiFeatures = new APIFeatures(Product.find(), req.query)
       .search()
@@ -35,8 +35,7 @@ const getProducts = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      count: products.length,
-      productCount,
+      productsCount,
       products,
     })
   } catch (error) {

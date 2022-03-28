@@ -11,6 +11,9 @@ const nextConfig = {
     SMTP_FROM_EMAIL: 'noreply@shopit.com',
     SMTP_FROM_NAME: 'ShopIT',
   },
+  images: {
+    domains: ['res.cloudinary.com'],
+  },
 }
 
 module.exports = nextConfig
