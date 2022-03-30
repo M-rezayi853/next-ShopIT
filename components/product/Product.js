@@ -2,9 +2,9 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Product = ({ product }) => {
+const Product = ({ product, col }) => {
   return (
-    <div className='col-sm-12 col-md-6 col-lg-3 my-3'>
+    <div className={`col-sm-12 col-md-6 col-lg-${col} my-3`}>
       <div className='card p-3 rounded'>
         <div className='card-img-top mx-auto d-flex justify-content-center'>
           <Image

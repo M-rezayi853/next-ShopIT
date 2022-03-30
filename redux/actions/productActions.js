@@ -9,25 +9,44 @@ import {
   CLEAR_ERROR,
 } from '../constants/productConstants'
 
-export const getProducts = (req) => async (dispatch) => {
-  try {
-    const { origin } = absoluteUrl(req)
+export const getProducts =
+  (
+    req,
+    currentPage = 1,
+    keyword = '',
+    minprice,
+    maxprice,
+    category,
+    ratings = 0
+  ) =>
+  async (dispatch) => {
+    try {
+      const { origin } = absoluteUrl(req)
 
-    const url = `${origin}/api/products`
+      let link = `${origin}/api/products?page=${currentPage}&keyword=${keyword}`
 
-    const { data } = await axios.get(url)
+      if (minprice || maxprice)
+        link = link.concat(`&minprice=${minprice}&maxprice=${maxprice}`)
 
-    dispatch({
-      type: ALL_PRODUCTS_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: ALL_PRODUCTS_FAIL,
-      payload: error.response.data.message,
-    })
+      if (category) link = link.concat(`&category=${category}`)
+
+      if (ratings) link = link.concat(`&ratings=${ratings}`)
+
+      const { data } = await axios.get(link)
+
+      dispatch({
+        type: ALL_PRODUCTS_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: ALL_PRODUCTS_FAIL,
+        // payload: error.response.data.message,
+        payload: error.response,
+      })
+      console.log(error)
+    }
   }
-}
 
 export const getProductDetails = (req, id) => async (dispatch) => {
   try {

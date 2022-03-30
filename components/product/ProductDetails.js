@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import Head from 'next/head'
 import Image from 'next/image'
 import { Carousel } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,6 +22,10 @@ const ProductDetails = () => {
 
   return (
     <>
+      <Head>
+        <title>{product.name} - ShopIT</title>
+      </Head>
+
       <div className='container container-fluid'>
         <div className='row f-flex justify-content-around'>
           <div className='col-12 col-lg-5 img-fluid' id='product_image'>

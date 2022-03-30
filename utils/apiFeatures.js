@@ -21,18 +21,57 @@ class APIFeatures {
   filter() {
     const queryCopy = { ...this.queryStr }
 
+    // Remove fields from query
+    const removeFields = ['keyword', 'limit', 'page', 'minprice', 'maxprice']
+    removeFields.forEach((el) => delete queryCopy[el])
+
+    this.query = this.query.find(queryCopy)
+    return this
+  }
+
+  filterRatings() {
+    const queryCopy = { ...this.queryStr }
+
+    // Removing fields from the query
+    const removeFields = ['keyword', 'limit', 'page', 'minprice', 'maxprice']
+    removeFields.forEach((el) => delete queryCopy[el])
+
+    let queryStrMe = queryCopy.ratings
+      ? {
+          ratings: {
+            gte: queryCopy.ratings,
+          },
+        }
+      : {}
+
+    let queryStr = JSON.stringify(queryStrMe)
+
+    queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`)
+
+    this.query = this.query.find(JSON.parse(queryStr))
+    return this
+  }
+
+  filterPrice() {
+    const queryCopy = { ...this.queryStr }
+
     // Removing fields from the query
     const removeFields = ['keyword', 'limit', 'page']
     removeFields.forEach((el) => delete queryCopy[el])
 
-    console.log(1, queryCopy)
+    let queryStrMe =
+      queryCopy.minprice || queryCopy.maxprice
+        ? {
+            price: {
+              gte: queryCopy.minprice,
+              lte: queryCopy.maxprice,
+            },
+          }
+        : {}
 
-    // Advance filter for price, ratings etc
-    let queryStr = JSON.stringify(queryCopy)
+    let queryStr = JSON.stringify(queryStrMe)
+
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte)\b/g, (match) => `$${match}`)
-
-    console.log(2, queryCopy)
-    console.log(3, queryStr)
 
     this.query = this.query.find(JSON.parse(queryStr))
     return this

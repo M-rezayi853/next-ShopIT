@@ -10,7 +10,6 @@
     "seeder": "node utils/seeder"
   },
   "dependencies": {
-    "@redux-devtools/extension": "^3.2.2",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "mongoose": "^6.2.7",
@@ -20,11 +19,13 @@
     "next-connect": "^0.12.2",
     "next-redux-wrapper": "^7.0.5",
     "nodemailer": "^6.7.3",
+    "rc-slider": "9.6.5",
     "react": "17.0.2",
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
     "react-bootstrap": "1.5.2",
     "react-dom": "17.0.2",
+    "react-js-pagination": "^3.0.3",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-devtools-extension": "^2.13.9",
