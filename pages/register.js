@@ -1,12 +1,13 @@
+import React from 'react'
 import { getSession } from 'next-auth/client'
 
-import Login from '../components/auth/Login'
 import Layout from '../components/layout/Layout'
+import Register from '../components/auth/Register'
 
-export default function LoginPage() {
+export default function register() {
   return (
-    <Layout title='Login User'>
-      <Login />
+    <Layout title='Register User'>
+      <Register />
     </Layout>
   )
 }

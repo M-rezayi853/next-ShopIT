@@ -1,14 +1,28 @@
 import absoluteUrl from 'next-absolute-url'
 import crypto from 'crypto'
+import cloudinary from 'cloudinary'
 
 import User from '../models/user'
 import ErrorHandler from '../utils/errorHandler'
 // import catchAsyncErrors from '../middlewares/catchAsyncErrors'
 import sendEmail from '../utils/sendEmail'
 
+// Setting up cloudinay config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 // Register a user  =>  /api/auth/register
 const registerUser = async (req, res, next) => {
   try {
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: 'shopit/avatars',
+      width: '150',
+      crop: 'scale',
+    })
+
     const { name, email, password } = req.body
 
     const user = await User.create({
@@ -16,8 +30,8 @@ const registerUser = async (req, res, next) => {
       email,
       password,
       avatar: {
-        public_id: 'products/dsvbpny402gelwugv2le',
-        url: 'https://res.cloudinary.com/bookit/image/upload/v1608062030/products/dsvbpny402gelwugv2le.jpg',
+        public_id: result.public_id,
+        url: result.secure_url,
       },
     })
 
@@ -83,7 +97,7 @@ const forgotPassword = async (req, res, next) => {
     const { origin } = absoluteUrl(req)
 
     // Create reset password url
-    const resetUrl = `${origin}/api/password/reset/${resetToken}`
+    const resetUrl = `${origin}/password/reset/${resetToken}`
 
     const message = `رمز بازنشانی رمز عبور شما به شرح زیر است: \n\n${resetUrl}\n\n اگر این ایمیل را درخواست نکرده اید، آن را نادیده بگیرید.`
 
@@ -205,7 +219,26 @@ const updateProfile = async (req, res, next) => {
       email: req.body.email,
     }
 
-    // Update avatar: TODO
+    // Update avatar: TODO:
+    if (req.body.avatar !== '') {
+      const user = await User.findById(req.user._id)
+
+      const image_id = user.avatar.public_id
+
+      // Delete user previous images/avatar
+      await cloudinary.v2.uploader.destroy(image_id)
+
+      const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: 'shopit/avatars',
+        width: '150',
+        crop: 'scale',
+      })
+
+      newUserData.avatar = {
+        public_id: result.public_id,
+        url: result.secure_url,
+      }
+    }
 
     const user = await User.findByIdAndUpdate(req.user._id, newUserData, {
       new: true,

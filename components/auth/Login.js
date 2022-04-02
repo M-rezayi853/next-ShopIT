@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-// import { toast } from 'react-toastify'
 import { signIn } from 'next-auth/client'
+import { useAlert } from 'react-alert'
 
-// import ButtonLoader from '../layout/ButtonLoader'
+import ButtonLoader from '../layout/ButtonLoader'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const alert = useAlert()
 
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -24,7 +26,7 @@ const Login = () => {
     setLoading(false)
 
     if (result.error) {
-      // toast.error(result.error)
+      alert.error(result.error)
     } else {
       window.location.href = '/'
     }
@@ -33,7 +35,7 @@ const Login = () => {
   return (
     <div className='container container-fluid'>
       <div className='row wrapper'>
-        <div className='col-10 col-lg-5'>
+        <div className='col-10 col-lg-5 pb-5'>
           <form className='shadow-lg' onSubmit={submitHandler}>
             <h1 className='mb-3'>Login</h1>
             <div className='form-group'>
@@ -58,8 +60,8 @@ const Login = () => {
               />
             </div>
 
-            <Link href='/password/forgot' className='float-right mb-4'>
-              <a>Forgot Password?</a>
+            <Link href='/password/forgot'>
+              <a className='float-right mb-4'>Forgot Password?</a>
             </Link>
 
             <button
@@ -68,10 +70,10 @@ const Login = () => {
               className='btn btn-block py-3'
               disabled={loading}
             >
-              {loading ? 'loading...' : 'LOGIN'}
+              {loading ? <ButtonLoader /> : 'LOGIN'}
             </button>
 
-            <Link href={'/register'}>
+            <Link href='/register'>
               <a className='float-right mt-3'>New User?</a>
             </Link>
           </form>

@@ -10,6 +10,9 @@ const nextConfig = {
     SMTP_PASSWORD: 'c9c383a7d66b18',
     SMTP_FROM_EMAIL: 'noreply@shopit.com',
     SMTP_FROM_NAME: 'ShopIT',
+    CLOUDINARY_CLOUD_NAME: 'dmscqygte',
+    CLOUDINARY_API_KEY: '938881393821676',
+    CLOUDINARY_API_SECRET: 'JjWNA1SrLm9n172TY4FETyU05zA',
   },
   images: {
     domains: ['res.cloudinary.com'],

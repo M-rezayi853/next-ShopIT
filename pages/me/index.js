@@ -1,12 +1,13 @@
+import React from 'react'
 import { getSession } from 'next-auth/client'
 
-import Login from '../components/auth/Login'
-import Layout from '../components/layout/Layout'
+import Layout from '../../components/layout/Layout'
+import Profile from '../../components/user/Profile'
 
-export default function LoginPage() {
+export default function profilePage() {
   return (
-    <Layout title='Login User'>
-      <Login />
+    <Layout title='Profile User'>
+      <Profile />
     </Layout>
   )
 }
@@ -14,10 +15,10 @@ export default function LoginPage() {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req })
 
-  if (session) {
+  if (!session) {
     return {
       redirect: {
-        destination: '/',
+        destination: '/login',
         permanent: false,
       },
     }
