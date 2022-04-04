@@ -13,7 +13,7 @@ export default function HomePage() {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
+HomePage.getInitialProps = wrapper.getInitialPageProps(
   (store) =>
     async ({ req, query }) => {
       await store.dispatch(
@@ -29,3 +29,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
       )
     }
 )
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req, query }) => {
+//       await store.dispatch(
+//         getProducts(
+//           req,
+//           query.page,
+//           query.keyword,
+//           query.minprice,
+//           query.maxprice,
+//           query.category,
+//           query.ratings
+//         )
+//       )
+//     }
+// )

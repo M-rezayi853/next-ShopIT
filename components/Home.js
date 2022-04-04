@@ -52,9 +52,13 @@ const Home = () => {
   const handlePagination = (pageNumber) => {
     // window.location.href = `/?page=${pageNumber}`
 
-    // let link = `/?page=${pageNumber}`
-    const link = `/?page=${pageNumber}&ratings=${ratings}`
-    router.push(link)
+    if (ratings) {
+      const link = `/?page=${pageNumber}&ratings=${ratings}`
+      router.push(link)
+    } else {
+      const link = `/?page=${pageNumber}`
+      router.push(link)
+    }
   }
 
   const handleCategory = (categ) => {
