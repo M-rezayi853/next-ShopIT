@@ -104,7 +104,6 @@ const Payment = () => {
       } else {
         // The payment is processes or not
         if (result.paymentIntent.status === 'succeeded') {
-          // TODO: New order
           order.paymentInfo = {
             id: result.paymentIntent.id,
             status: result.paymentIntent.status,

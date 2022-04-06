@@ -16,6 +16,7 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.29.0",
     "countries-list": "^2.6.1",
+    "mdbreact": "^5.2.0",
     "mongoose": "^6.2.7",
     "next": "12.1.0",
     "next-absolute-url": "^1.2.2",

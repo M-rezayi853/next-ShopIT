@@ -85,14 +85,14 @@ const Header = () => {
               >
                 {user.role === 'ادمین' && (
                   <>
-                    <Link href={'/admin/rooms'}>
+                    <Link href={'/admin/dashboard'}>
                       <a className='dropdown-item'>Dashboard</a>
                     </Link>
                     <hr />
                   </>
                 )}
 
-                <Link href={'/orders/me'}>
+                <Link href={'/order/me'}>
                   <a className='dropdown-item'>Orders</a>
                 </Link>
 
