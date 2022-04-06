@@ -10,9 +10,12 @@
     "seeder": "node utils/seeder"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.26.0",
     "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.29.0",
+    "countries-list": "^2.6.1",
     "mongoose": "^6.2.7",
     "next": "12.1.0",
     "next-absolute-url": "^1.2.2",
@@ -32,6 +35,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
+    "stripe": "^8.215.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {

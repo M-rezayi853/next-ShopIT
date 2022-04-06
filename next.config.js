@@ -13,6 +13,10 @@ const nextConfig = {
     CLOUDINARY_CLOUD_NAME: 'dmscqygte',
     CLOUDINARY_API_KEY: '938881393821676',
     CLOUDINARY_API_SECRET: 'JjWNA1SrLm9n172TY4FETyU05zA',
+    STRIPE_SECRET_KEY:
+      'sk_test_51KSPQDC6cs9LtJjcw5NEw53rrNfJtGQkPQwFpsg3tbgskCEp85VSQavyqZI4ButfiPlOTDzlZFk4B4YNenvTLCNH00RdD58RiT',
+    STRIPE_API_KEY:
+      'pk_test_51KSPQDC6cs9LtJjcpByYRQqd4q0VirC9Cg3juNv4WtkjiBVNwRlvvJxBTEXXIrbdrbNzzpXSlP9OLIqErsGh3Zt400vnPKXgLF',
   },
   images: {
     domains: ['res.cloudinary.com'],

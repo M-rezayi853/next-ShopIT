@@ -8,6 +8,7 @@ import {
   forgotPasswordReducer,
 } from './userReducer'
 import { cartReducer } from './cartReducers'
+import { newOrderReducer } from './orderReducers'
 
 const reducers = combineReducers({
   products: productsReducer,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   user: userReducer,
   forgotPassword: forgotPasswordReducer,
   cart: cartReducer,
+  newOrder: newOrderReducer,
 })
 
 export default reducers

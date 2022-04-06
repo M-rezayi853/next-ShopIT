@@ -1,12 +1,13 @@
+import React from 'react'
 import { getSession } from 'next-auth/client'
 
-import Login from '../components/auth/Login'
-import Layout from '../components/layout/Layout'
+import Layout from '../../components/layout/Layout'
+import Shipping from '../../components/cart/Shipping'
 
-export default function LoginPage() {
+export default function ShippingPage() {
   return (
-    <Layout title='Login User'>
-      <Login />
+    <Layout title='Shipping Info'>
+      <Shipping />
     </Layout>
   )
 }
@@ -14,12 +15,10 @@ export default function LoginPage() {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req })
 
-  const redirect = context.query ? context.query.redirect : '/'
-
-  if (session) {
+  if (!session) {
     return {
       redirect: {
-        destination: redirect,
+        destination: '/login?redirect=shipping',
         permanent: false,
       },
     }

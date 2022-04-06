@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { signIn } from 'next-auth/client'
 import { useAlert } from 'react-alert'
 
@@ -10,6 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const router = useRouter()
   const alert = useAlert()
 
   const submitHandler = async (e) => {
@@ -28,7 +30,8 @@ const Login = () => {
     if (result.error) {
       alert.error(result.error)
     } else {
-      window.location.href = '/'
+      const redirect = router.query.redirect ? router.query.redirect : '/'
+      window.location.href = redirect
     }
   }
 

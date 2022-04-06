@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useAlert } from 'react-alert'
+import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import {
@@ -11,6 +11,7 @@ import {
 
 const Cart = () => {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const { cartItems } = useSelector((state) => state.cart)
 
@@ -34,6 +35,10 @@ const Cart = () => {
     dispatch(removeItemFromCart(id))
   }
 
+  const checkoutHandler = () => {
+    router.push('/login?redirect=shipping')
+  }
+
   return (
     <>
       {cartItems.length === 0 ? (
@@ -49,9 +54,9 @@ const Cart = () => {
 
             <div className='row d-flex justify-content-between'>
               <div className='col-12 col-lg-8'>
+                <hr />
                 {cartItems.map((item) => (
                   <div key={item.product}>
-                    <hr />
                     <div className='cart-item'>
                       <div className='row'>
                         <div className='col-4 col-lg-3'>
@@ -151,6 +156,7 @@ const Cart = () => {
                   <button
                     id='checkout_btn'
                     className='btn btn-primary btn-block'
+                    onClick={checkoutHandler}
                   >
                     Check out
                   </button>
