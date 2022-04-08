@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { positions, transitions, Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 
@@ -17,6 +18,8 @@ const Layout = ({
   title = 'ShopIT - Complete Ecommerce Project',
   description = 'Complete ecommerce site using MERN',
 }) => {
+  const router = useRouter()
+
   return (
     <div>
       <Head>
@@ -29,7 +32,8 @@ const Layout = ({
       <AlertProvider template={AlertTemplate} {...options}>
         <Header />
         {children}
-        <Footer />
+
+        {router.route.includes('/admin') ? '' : <Footer />}
       </AlertProvider>
     </div>
   )

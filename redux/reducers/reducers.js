@@ -4,6 +4,8 @@ import {
   productsReducer,
   productDetailsReducer,
   newReviewReducer,
+  newProductReducer,
+  productReducer,
 } from './productReducers'
 import {
   authReducer,
@@ -30,6 +32,8 @@ const reducers = combineReducers({
   myOrders: myOrdersReducer,
   orderDetails: orderDetailsReducer,
   newReview: newReviewReducer,
+  newProduct: newProductReducer,
+  product: productReducer,
 })
 
 export default reducers

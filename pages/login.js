@@ -14,7 +14,7 @@ export default function LoginPage() {
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req })
 
-  const redirect = context.query ? context.query.redirect : '/'
+  const redirect = context.query.redirect ? context.query.redirect : '/'
 
   if (session) {
     return {
