@@ -60,7 +60,7 @@ const Sidebar = () => {
             </li>
 
             <li>
-              <Link href='/admin/reveiws'>
+              <Link href='/admin/reviews'>
                 <a>
                   <i className='fa fa-star'></i> Reviews
                 </a>

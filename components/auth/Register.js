@@ -28,7 +28,7 @@ const Register = () => {
 
   useEffect(() => {
     if (success) {
-      router.push('/')
+      router.push('/login')
     }
 
     if (error) {

@@ -7,20 +7,18 @@ import { MDBDataTable } from 'mdbreact'
 import Loader from '../layout/Loader'
 import Sidebar from './Sidebar'
 import {
-  getAdminProducts,
-  deleteProduct,
+  allUsers,
+  deleteUser,
   clearErrors,
-} from '../../redux/actions/productActions'
-import { DELETE_PRODUCT_RESET } from '../../redux/constants/productConstants'
+} from '../../redux/actions/userActions'
+import { DELETE_USER_RESET } from '../../redux/constants/userConstants'
 
-const ProductsList = () => {
+const UsersList = () => {
   const alert = useAlert()
   const dispatch = useDispatch()
 
-  const { products, loading, error } = useSelector((state) => state.products)
-  const { isDeleted, error: deleteError } = useSelector(
-    (state) => state.product
-  )
+  const { users, loading, error } = useSelector((state) => state.allUsers)
+  const { isDeleted } = useSelector((state) => state.user)
 
   useEffect(() => {
     if (error) {
@@ -28,28 +26,23 @@ const ProductsList = () => {
       dispatch(clearErrors())
     }
 
-    if (deleteError) {
-      alert.error(deleteError)
-      dispatch(clearErrors())
-    }
-
     if (isDeleted) {
-      alert.success('Product is deleted successfully')
-      dispatch({ type: DELETE_PRODUCT_RESET })
+      alert.success('Order is deleted successfully')
+      dispatch({ type: DELETE_USER_RESET })
     }
 
-    dispatch(getAdminProducts())
-  }, [dispatch, error, alert, isDeleted, deleteError])
+    dispatch(allUsers())
+  }, [dispatch, error, alert, isDeleted])
 
-  const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id))
+  const deleteUserHandler = (id) => {
+    dispatch(deleteUser(id))
   }
 
-  const setProductsHandler = () => {
+  const setUsersHandler = () => {
     const data = {
       columns: [
         {
-          label: 'ID',
+          label: 'User ID',
           field: 'id',
           sort: 'asc',
         },
@@ -59,13 +52,13 @@ const ProductsList = () => {
           sort: 'asc',
         },
         {
-          label: 'Price',
-          field: 'price',
+          label: 'Email',
+          field: 'email',
           sort: 'asc',
         },
         {
-          label: 'Stock',
-          field: 'stock',
+          label: 'Role',
+          field: 'role',
           sort: 'asc',
         },
         {
@@ -76,15 +69,15 @@ const ProductsList = () => {
       rows: [],
     }
 
-    products.forEach((product) => {
+    users.forEach((user) => {
       data.rows.push({
-        id: product._id,
-        name: product.name,
-        price: `$${product.price}`,
-        stock: product.stock,
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
         actions: (
           <>
-            <Link href={`/admin/products/${product._id}`}>
+            <Link href={`/admin/users/${user._id}`}>
               <a className='btn btn-primary py-1 px-2'>
                 <i className='fa fa-pencil'></i>
               </a>
@@ -92,7 +85,7 @@ const ProductsList = () => {
 
             <button
               className='btn btn-danger py-1 px-2 ml-2'
-              onClick={() => deleteProductHandler(product._id)}
+              onClick={() => deleteUserHandler(user._id)}
             >
               <i className='fa fa-trash'></i>
             </button>
@@ -113,13 +106,13 @@ const ProductsList = () => {
 
         <div className='col-12 col-md-10'>
           <>
-            <h1 className='my-5'>All Products</h1>
+            <h1 className='my-5'>All Users</h1>
 
             {loading ? (
               <Loader />
             ) : (
               <MDBDataTable
-                data={setProductsHandler()}
+                data={setUsersHandler()}
                 className='px-3'
                 bordered
                 striped
@@ -133,4 +126,4 @@ const ProductsList = () => {
   )
 }
 
-export default ProductsList
+export default UsersList

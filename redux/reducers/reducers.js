@@ -6,18 +6,24 @@ import {
   newReviewReducer,
   newProductReducer,
   productReducer,
+  productReviewsReducer,
+  reviewReducer,
 } from './productReducers'
 import {
   authReducer,
   loadedUserReducer,
   userReducer,
   forgotPasswordReducer,
+  allUsersReducer,
+  userDetailsReducer,
 } from './userReducer'
 import { cartReducer } from './cartReducers'
 import {
   newOrderReducer,
   myOrdersReducer,
   orderDetailsReducer,
+  allOrdersReducer,
+  orderReducer,
 } from './orderReducers'
 
 const reducers = combineReducers({
@@ -34,6 +40,12 @@ const reducers = combineReducers({
   newReview: newReviewReducer,
   newProduct: newProductReducer,
   product: productReducer,
+  allOrders: allOrdersReducer,
+  order: orderReducer,
+  allUsers: allUsersReducer,
+  userDetails: userDetailsReducer,
+  productReviews: productReviewsReducer,
+  review: reviewReducer,
 })
 
 export default reducers

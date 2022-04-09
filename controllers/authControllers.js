@@ -46,38 +46,38 @@ const registerUser = async (req, res, next) => {
 }
 
 // Login user  =>  /api/auth/login
-const loginUser = async (req, res, next) => {
-  try {
-    const { email, password } = req.body
+// const loginUser = async (req, res, next) => {
+//   try {
+//     const { email, password } = req.body
 
-    // Checks if email and password is entered by user
-    if (!email || !password) {
-      return next(new ErrorHandler('لطفا ایمیل و رمز عبور را وارد کنید', 400))
-    }
+//     // Checks if email and password is entered by user
+//     if (!email || !password) {
+//       return next(new ErrorHandler('لطفا ایمیل و رمز عبور را وارد کنید', 400))
+//     }
 
-    // Finding user in database
-    const user = await User.findOne({ email }).select('+password')
+//     // Finding user in database
+//     const user = await User.findOne({ email }).select('+password')
 
-    if (!user) {
-      return next(new ErrorHandler('ایمیل یا رمز عبور نامعتبر است', 401))
-    }
+//     if (!user) {
+//       return next(new ErrorHandler('ایمیل یا رمز عبور نامعتبر است', 401))
+//     }
 
-    // Checks if password is correct or not
-    const isPasswordMatched = await user.comparePassword(password)
+//     // Checks if password is correct or not
+//     const isPasswordMatched = await user.comparePassword(password)
 
-    if (!isPasswordMatched) {
-      return next(new ErrorHandler('ایمیل یا رمز عبور نامعتبر است', 401))
-    }
+//     if (!isPasswordMatched) {
+//       return next(new ErrorHandler('ایمیل یا رمز عبور نامعتبر است', 401))
+//     }
 
-    res.status(200).json({
-      success: true,
-      message: 'حساب با موفقیت وارد شد',
-    })
-  } catch (error) {
-    console.log(error)
-    throw new Error(error)
-  }
-}
+//     res.status(200).json({
+//       success: true,
+//       message: 'حساب با موفقیت وارد شد',
+//     })
+//   } catch (error) {
+//     console.log(error)
+//     throw new Error(error)
+//   }
+// }
 
 // Forgot password  =>  /api/password/forgot
 const forgotPassword = async (req, res, next) => {
@@ -272,7 +272,7 @@ const allUsers = async (req, res, next) => {
   }
 }
 
-// Get user details  =>  /api/admin/user/:id
+// Get user details  =>  /api/admin/users/:id
 const getUserDetails = async (req, res, next) => {
   try {
     const user = await User.findById(req.query.id)
@@ -317,7 +317,7 @@ const updateUser = async (req, res, next) => {
   }
 }
 
-// Delete user  =>  /api/admin/user/:id
+// Delete user  =>  /api/admin/users/:id
 const deleteUser = async (req, res, next) => {
   try {
     const user = await User.findById(req.query.id)
@@ -328,7 +328,9 @@ const deleteUser = async (req, res, next) => {
       )
     }
 
-    // Remove avatar from cloudinary - TODO
+    // Remove avatar from cloudinary
+    const image_id = user.avatar.public_id
+    await cloudinary.v2.uploader.destroy(image_id)
 
     await user.remove()
 
@@ -343,7 +345,6 @@ const deleteUser = async (req, res, next) => {
 
 export {
   registerUser,
-  loginUser,
   forgotPassword,
   resetPassword,
   getUserProfile,

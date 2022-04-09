@@ -7,20 +7,18 @@ import { MDBDataTable } from 'mdbreact'
 import Loader from '../layout/Loader'
 import Sidebar from './Sidebar'
 import {
-  getAdminProducts,
-  deleteProduct,
+  allOrders,
+  deleteOrder,
   clearErrors,
-} from '../../redux/actions/productActions'
-import { DELETE_PRODUCT_RESET } from '../../redux/constants/productConstants'
+} from '../../redux/actions/orderActions'
+import { DELETE_ORDER_RESET } from '../../redux/constants/orderConstants'
 
-const ProductsList = () => {
+const OrdersList = () => {
   const alert = useAlert()
   const dispatch = useDispatch()
 
-  const { products, loading, error } = useSelector((state) => state.products)
-  const { isDeleted, error: deleteError } = useSelector(
-    (state) => state.product
-  )
+  const { orders, loading, error } = useSelector((state) => state.allOrders)
+  const { isDeleted } = useSelector((state) => state.order)
 
   useEffect(() => {
     if (error) {
@@ -28,44 +26,39 @@ const ProductsList = () => {
       dispatch(clearErrors())
     }
 
-    if (deleteError) {
-      alert.error(deleteError)
-      dispatch(clearErrors())
-    }
-
     if (isDeleted) {
-      alert.success('Product is deleted successfully')
-      dispatch({ type: DELETE_PRODUCT_RESET })
+      alert.success('Order is deleted successfully')
+      dispatch({ type: DELETE_ORDER_RESET })
     }
 
-    dispatch(getAdminProducts())
-  }, [dispatch, error, alert, isDeleted, deleteError])
+    dispatch(allOrders())
+  }, [dispatch, error, alert, isDeleted])
 
-  const deleteProductHandler = (id) => {
-    dispatch(deleteProduct(id))
+  const deleteOrderHandler = (id) => {
+    dispatch(deleteOrder(id))
   }
 
-  const setProductsHandler = () => {
+  const setOrdersHandler = () => {
     const data = {
       columns: [
         {
-          label: 'ID',
+          label: 'Order ID',
           field: 'id',
           sort: 'asc',
         },
         {
-          label: 'Name',
-          field: 'name',
+          label: 'No of Items',
+          field: 'numofItems',
           sort: 'asc',
         },
         {
-          label: 'Price',
-          field: 'price',
+          label: 'Amount',
+          field: 'amount',
           sort: 'asc',
         },
         {
-          label: 'Stock',
-          field: 'stock',
+          label: 'Status',
+          field: 'status',
           sort: 'asc',
         },
         {
@@ -76,23 +69,29 @@ const ProductsList = () => {
       rows: [],
     }
 
-    products.forEach((product) => {
+    orders.forEach((order) => {
       data.rows.push({
-        id: product._id,
-        name: product.name,
-        price: `$${product.price}`,
-        stock: product.stock,
+        id: order._id,
+        numofItems: order.orderItems.length,
+        amount: `$${order.totalPrice}`,
+        status:
+          order.orderStatus &&
+          String(order.orderStatus).includes('Delivered') ? (
+            <p style={{ color: 'green' }}>{order.orderStatus}</p>
+          ) : (
+            <p style={{ color: 'red' }}>{order.orderStatus}</p>
+          ),
         actions: (
           <>
-            <Link href={`/admin/products/${product._id}`}>
+            <Link href={`/admin/orders/${order._id}`}>
               <a className='btn btn-primary py-1 px-2'>
-                <i className='fa fa-pencil'></i>
+                <i className='fa fa-eye'></i>
               </a>
             </Link>
 
             <button
               className='btn btn-danger py-1 px-2 ml-2'
-              onClick={() => deleteProductHandler(product._id)}
+              onClick={() => deleteOrderHandler(order._id)}
             >
               <i className='fa fa-trash'></i>
             </button>
@@ -113,13 +112,13 @@ const ProductsList = () => {
 
         <div className='col-12 col-md-10'>
           <>
-            <h1 className='my-5'>All Products</h1>
+            <h1 className='my-5'>All Orders</h1>
 
             {loading ? (
               <Loader />
             ) : (
               <MDBDataTable
-                data={setProductsHandler()}
+                data={setOrdersHandler()}
                 className='px-3'
                 bordered
                 striped
@@ -133,4 +132,4 @@ const ProductsList = () => {
   )
 }
 
-export default ProductsList
+export default OrdersList

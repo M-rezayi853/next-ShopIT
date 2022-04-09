@@ -232,7 +232,7 @@ const createProductReview = async (req, res, next) => {
   }
 }
 
-// Get product reviews  =>  /api/reviews
+// Get product reviews  =>  /api/admin/reviews?id={productId}
 const getProductReviews = async (req, res, next) => {
   try {
     const product = await Product.findById(req.query.id)
@@ -247,7 +247,7 @@ const getProductReviews = async (req, res, next) => {
   }
 }
 
-// Delete product review  =>  /api/reviews
+// Delete product review  =>  /api/asmin/reviews?id={id}&productId={productId}
 const deleteReview = async (req, res, next) => {
   try {
     const product = await Product.findById(req.query.productId)

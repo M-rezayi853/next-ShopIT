@@ -13,18 +13,20 @@ const OrderDetails = () => {
   const dispatch = useDispatch()
   const alert = useAlert()
 
-  const { order, loading, error } = useSelector((state) => state.orderDetails)
+  const {
+    order = {},
+    loading,
+    error,
+  } = useSelector((state) => state.orderDetails)
 
-  if (order) {
-    const {
-      shippingInfo,
-      orderItems,
-      paymentInfo,
-      user,
-      totalPrice,
-      orderStatus,
-    } = order
-  }
+  const {
+    shippingInfo,
+    orderItems,
+    paymentInfo,
+    user,
+    totalPrice,
+    orderStatus,
+  } = order
 
   const shippingDetails =
     shippingInfo &&
