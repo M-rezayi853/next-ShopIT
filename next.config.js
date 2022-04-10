@@ -17,7 +17,7 @@ const nextConfig = {
       'sk_test_51KSPQDC6cs9LtJjcw5NEw53rrNfJtGQkPQwFpsg3tbgskCEp85VSQavyqZI4ButfiPlOTDzlZFk4B4YNenvTLCNH00RdD58RiT',
     STRIPE_API_KEY:
       'pk_test_51KSPQDC6cs9LtJjcpByYRQqd4q0VirC9Cg3juNv4WtkjiBVNwRlvvJxBTEXXIrbdrbNzzpXSlP9OLIqErsGh3Zt400vnPKXgLF',
-    NEXTAUTH_URL: 'https://shopit-mh77.vercel.app/',
+    NEXTAUTH_URL: 'https://shopit-mh77.vercel.app',
   },
   images: {
     domains: ['res.cloudinary.com'],

@@ -5,7 +5,7 @@ import { useAlert } from 'react-alert'
 import Pagination from 'react-js-pagination'
 import Slider from 'rc-slider'
 
-import Product from './product/product'
+import ProductItem from './product/ProductItem'
 import { clearErrors } from '../redux/actions/productActions'
 import 'rc-slider/assets/index.css'
 
@@ -154,7 +154,11 @@ const Home = () => {
                   <div className='row'>
                     {products &&
                       products.map((product) => (
-                        <Product key={product._id} product={product} col={4} />
+                        <ProductItem
+                          key={product._id}
+                          product={product}
+                          col={4}
+                        />
                       ))}
                   </div>
                 </div>
@@ -163,7 +167,7 @@ const Home = () => {
               <>
                 {products &&
                   products.map((product) => (
-                    <Product key={product._id} product={product} col={3} />
+                    <ProductItem key={product._id} product={product} col={3} />
                   ))}
               </>
             )}

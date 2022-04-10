@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const Product = ({ product, col }) => {
+const ProductItem = ({ product, col }) => {
   return (
     <div className={`col-sm-12 col-md-6 col-lg-${col} my-3`}>
       <div className='card p-3 rounded'>
@@ -41,4 +41,4 @@ const Product = ({ product, col }) => {
   )
 }
 
-export default Product
+export default ProductItem
