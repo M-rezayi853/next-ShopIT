@@ -50,7 +50,7 @@ const Profile = () => {
                 <p>{String(user && user.createdAt).substring(0, 10)}</p>
 
                 {user && user.role !== 'ادمین' && (
-                  <Link href={'/orders/me'}>
+                  <Link href={'/order/me'}>
                     <a className='btn btn-danger btn-block mt-5'>My Orders</a>
                   </Link>
                 )}
