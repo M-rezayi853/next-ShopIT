@@ -3,6 +3,7 @@
   - Next Auth
   - Redux & Redux Thunk
   - React Bootstarp
+  - MongoDB
   - Cloudinary
   - Axios
   - Stripe
